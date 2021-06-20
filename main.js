@@ -1,4 +1,8 @@
 import './style.css';
+import './cards.css';
+import './projects.css';
+import './timeline.css';
+
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
@@ -139,8 +143,7 @@ function moveCamera() {
   earth.rotation.y += 0.01;
  // earth.rotation.z += 0.01;
 
-  me.rotation.y += 0.01;
-  //me.rotation.z += 0.01;
+  me.rotation.y += 0.005;
 
   camera.position.z = t * -0.01;
   camera.position.x = t * -0.0002;
@@ -153,6 +156,8 @@ moveCamera();
 // Animation Loop
 function animate() {
   requestAnimationFrame(animate);
+  
+ // me.rotation.y += 0.005;
 
   //sun.rotation.x += 0.01;
   sun.rotation.y += 0.005;
@@ -160,7 +165,7 @@ function animate() {
 
   earth.rotation.y += 0.005;
   //Moon orbiting
-  pivotPoint.rotation.y += 0.001;
+  pivotPoint.rotation.y += 0.0001;
 
   //controls.update();
 
@@ -168,20 +173,3 @@ function animate() {
 }
 
 animate();
-
-/*// Moon
-
-const moon1Texture = new THREE.TextureLoader().load('ZaraiBacem.jpg');
-
-const moon1 = new THREE.Mesh(
-  new THREE.TetrahedronGeometry(3),
-  new THREE.MeshStandardMaterial({
-    map: moon1Texture,
-  })
-);
-
-scene.add(moon1);
-
-moon1.position.z = 30;
-moon1.position.setX(-40);
-*/
