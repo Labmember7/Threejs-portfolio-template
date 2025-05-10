@@ -1,10 +1,8 @@
-import './style.css';
-import './cards.css';
-import './projects.css';
-import './timeline.css';
-
+import '/assets/css/style.css';
+import '/assets/css/cards.css';
+import '/assets/css/projects.css';
+import '/assets/css/timeline.css';
 import * as THREE from 'three';
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
 // Setup
 
@@ -19,15 +17,15 @@ const renderer = new THREE.WebGLRenderer({
 renderer.setPixelRatio(window.devicePixelRatio);
 renderer.setSize(window.innerWidth, window.innerHeight);
 camera.position.setZ(30);
-camera.position.setX(-3);
+camera.position.setX(-5);
 
 renderer.render(scene, camera);
 
 // sun
-const sunTexture = new THREE.TextureLoader().load('sun.jpg');
-const normalSunTexture = new THREE.TextureLoader().load('normal.jpg');
+const sunTexture = new THREE.TextureLoader().load('/assets/img/sun.jpg');
+const normalSunTexture = new THREE.TextureLoader().load('/assets/img/normal.jpg');
 const sun = new THREE.Mesh(
-  new THREE.SphereBufferGeometry(40, 36, 36),
+  new THREE.SphereGeometry(40, 36, 36),
   new THREE.MeshStandardMaterial({
     map: sunTexture,
     normalMap: normalSunTexture,
@@ -46,17 +44,9 @@ pointLight.position.set(5, 5, 5);
 const ambientLight = new THREE.AmbientLight(0xffffff);
 scene.add(pointLight, ambientLight);
 
-ambientLight.intensity =0.6
-pointLight.intensity =0.7
+ambientLight.intensity = 0.6
+pointLight.intensity = 0.7
 
-// Helpers
-
-/*const lightHelper = new THREE.PointLightHelper(pointLight)
-const gridHelper = new THREE.GridHelper(200, 50);
-scene.add(lightHelper, gridHelper)
-
-const controls = new OrbitControls(camera, renderer.domElement);
-*/
 function addStar(col) {
   const geometry = new THREE.SphereGeometry(0.1, 24, 24);
   const material = new THREE.MeshStandardMaterial({ color: col });
@@ -69,19 +59,24 @@ function addStar(col) {
   star.position.set(x, y, z);
   scene.add(star);
 }
-const arr = [0x00FFFF,0xFF7F7F,0x90ee90];
+const arr = [0x00FFFF, 0xFF7F7F, 0x90ee90];
 
 
-Array(400).fill().forEach(()=>addStar(arr[Math.floor(Math.random() * arr.length)]));
+Array(400).fill().forEach(() => addStar(arr[Math.floor(Math.random() * arr.length)]));
 
 // Background
-const backgrounds = ['star.jpg','nebula.jpg','sp1.jpg','space.jpg']
+const backgrounds = [
+  '/assets/img/star.jpg',
+  '/assets/img/nebula.jpg',
+  '/assets/img/sp1.jpg',
+  '/assets/img/space.jpg'
+];
 const spaceTexture = new THREE.TextureLoader().load(backgrounds[Math.floor(Math.random() * backgrounds.length)]);
 scene.background = spaceTexture;
 
 // Avatar
 
-const meTexture = new THREE.TextureLoader().load('ZaraiBacem.jpg');
+const meTexture = new THREE.TextureLoader().load('/assets/img/me.jpg');
 
 const me = new THREE.Mesh(new THREE.BoxGeometry(3, 2, 3), new THREE.MeshBasicMaterial({ map: meTexture }));
 
@@ -92,11 +87,11 @@ me.position.x = 2;
 
 // Moon
 
-const moonTexture = new THREE.TextureLoader().load('moon.jpg');
-const normalTexture = new THREE.TextureLoader().load('normal.jpg');
+const moonTexture = new THREE.TextureLoader().load('/assets/img/moon.jpg');
+const normalTexture = new THREE.TextureLoader().load('/assets/img/normal.jpg');
 
 const moon = new THREE.Mesh(
-  new THREE.SphereBufferGeometry(3, 32, 32),
+  new THREE.SphereGeometry(3, 32, 32),
   new THREE.MeshStandardMaterial({
     map: moonTexture,
     normalMap: normalTexture,
@@ -110,11 +105,11 @@ moon.position.setX(-40);
 
 // EARTH
 
-const earthTexture = new THREE.TextureLoader().load('Earth2kTexture.png');
-const normalEarthTexture = new THREE.TextureLoader().load('Earth2kNormal.png');
+const earthTexture = new THREE.TextureLoader().load('/assets/img/Earth2kTexture.png');
+const normalEarthTexture = new THREE.TextureLoader().load('/assets/img/Earth2kNormal.png');
 
 const earth = new THREE.Mesh(
-  new THREE.SphereBufferGeometry(12, 32, 32),
+  new THREE.SphereGeometry(12, 32, 32),
   new THREE.MeshStandardMaterial({
     map: earthTexture,
     normalMap: normalEarthTexture,
@@ -139,9 +134,7 @@ function moveCamera() {
   moon.rotation.y += 0.075;
   moon.rotation.z += 0.05;
 
- // earth.rotation.x += 0.01;
   earth.rotation.y += 0.01;
- // earth.rotation.z += 0.01;
 
   me.rotation.y += 0.005;
 
@@ -156,19 +149,10 @@ moveCamera();
 // Animation Loop
 function animate() {
   requestAnimationFrame(animate);
-  
- // me.rotation.y += 0.005;
-
-  //sun.rotation.x += 0.01;
   sun.rotation.y += 0.005;
-  //sun.rotation.z += 0.01;
-
   earth.rotation.y += 0.005;
   //Moon orbiting
   pivotPoint.rotation.y += 0.0001;
-
-  //controls.update();
-
   renderer.render(scene, camera);
 }
 
